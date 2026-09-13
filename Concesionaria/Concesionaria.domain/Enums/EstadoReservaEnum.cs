@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Concesionaria.domain.Enums
 {
-    internal class EstadoReservaEnum
+    public enum EstadoReservaEnum
     {
+        Pendiente,
+        Confirmada,
+        Cancelada,
+        Concretada
     }
 }

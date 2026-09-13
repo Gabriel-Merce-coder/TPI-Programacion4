@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 namespace Concesionaria.domain.Entities
 {
-    internal class VehiculuEquipamiento
+    public class VehiculoEquipamiento
     {
+        public int VehiculoId { get; set; }
+        public Vehiculo Vehiculo { get; set; } = null!;
+        public int EquipamientoId { get; set; }
+        public Equipamiento Equipamiento { get; set; } =  null!;
     }
 }

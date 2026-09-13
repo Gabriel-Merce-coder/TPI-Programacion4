@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Concesionaria.domain.Entities
 {
-    internal class Cliente
+    public class Cliente : Usuario
     {
+        public ICollection<Reserva> Reservas { get; set; } 
+            = new List<Reserva>();
     }
 }
