@@ -8,13 +8,19 @@ namespace Concesionaria.domain.Entities
     {
         private const string PatronTelefono = @"^\d{10}$";
         public int Id { get; set; }
-        public string Nombre { get; set; } = string.Empty;
-        public string Apellido { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Contrasenia { get; set; } = string.Empty;
-        public string Telefono { get; set; } = string.Empty;
-
-
+        public string Nombre { get; private set; } 
+        public string Apellido { get; private set; } 
+        public string Email { get; private  set; } 
+        public string Contrasenia { get;  private set; } 
+        public string Telefono { get; private  set; }
+        protected Usuario()
+        {
+            Nombre = null!;
+            Apellido = null!;
+            Email = null!;
+            Contrasenia = null!;
+            Telefono = null!;
+        }
         public Usuario(string nombre, string apellido, string email, string contrasenia, string telefono)
         {
 

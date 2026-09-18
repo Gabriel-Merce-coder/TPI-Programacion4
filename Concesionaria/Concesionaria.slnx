@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="Concesionaria.domain/Concesionaria.domain.csproj" Id="4bf93f63-3cd3-42e5-939e-b06635644ca9" />
+  <Project Path="Concesionaria.Application/Concesionaria.Application.csproj" />
+  <Project Path="Concesionaria.domain/Concesionaria.domain.csproj" />
+  <Project Path="Concesionaria.Infrastructure/Concesionaria.Infrastructure.csproj" />
+  <Project Path="Concesionaria.Presentation/Concesionaria.Presentation.csproj" Id="23fc7adf-333f-4730-97e6-fd00a4060f56" />
 </Solution>
