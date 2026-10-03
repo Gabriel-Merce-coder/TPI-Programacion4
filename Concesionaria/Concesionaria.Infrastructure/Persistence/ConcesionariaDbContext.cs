@@ -18,6 +18,14 @@ namespace Concesionaria.Infrastructure.Persistence
             modelBuilder.Ignore<Reserva>();
             modelBuilder.Ignore<VehiculoEquipamiento>();
 
+            modelBuilder.Entity<Vehiculo>()
+                .Property(v => v.Precio)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Vehiculo>()
+                .Property(v => v.Valuacion)
+                .HasPrecision(18, 2);
+
             base.OnModelCreating(modelBuilder);
         }
     }
