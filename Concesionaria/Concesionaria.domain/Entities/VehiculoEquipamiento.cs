@@ -2,13 +2,18 @@
 {
     public class VehiculoEquipamiento
     {
-        public int VehiculoId { get; }
+        public int VehiculoId { get; private set; }
 
-        public Vehiculo Vehiculo { get; } = null!;
+        public Vehiculo Vehiculo { get; private set; } = null!;
 
-        public int EquipamientoId { get; }
+        public int EquipamientoId { get; private set; }
 
-        public Equipamiento Equipamiento { get; } = null!;
+        public Equipamiento Equipamiento { get; private set; } = null!;
+
+
+        private VehiculoEquipamiento()
+        {
+        }
 
 
         public VehiculoEquipamiento(
