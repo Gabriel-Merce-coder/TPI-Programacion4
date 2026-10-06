@@ -2,16 +2,20 @@
 {
     public class Venta
     {
-        public int Id { get; }
+        public int Id { get; private set; }
 
-        public DateTime FechaVenta { get; }
+        public DateTime FechaVenta { get; private set; }
 
         public decimal PrecioFinal { get; private set; }
 
-        public int ReservaId { get; }
+        public int ReservaId { get; private set; }
 
-        public Reserva Reserva { get; } = null!;
+        public Reserva Reserva { get; private set; } = null!;
 
+
+        private Venta()
+        {
+        }
 
         public Venta(
             DateTime fechaVenta,
