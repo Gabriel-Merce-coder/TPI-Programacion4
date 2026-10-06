@@ -1,10 +1,12 @@
-﻿
-
-namespace Concesionaria.domain.Entities
+﻿namespace Concesionaria.domain.Entities
 {
-    public  class Administrador : Usuario
+    public class Administrador : Usuario
     {
         public string Cargo { get; private set; } = string.Empty;
+
+        private Administrador()
+        {
+        }
 
         public Administrador(string nombre, string apellido, string email, string contrasenia, string telefono, string cargo)
             : base(nombre, apellido, email, contrasenia, telefono)
@@ -16,5 +18,4 @@ namespace Concesionaria.domain.Entities
             Cargo = cargo;
         }
     }
-    
 }
