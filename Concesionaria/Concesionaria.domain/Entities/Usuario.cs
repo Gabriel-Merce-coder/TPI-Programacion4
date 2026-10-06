@@ -1,18 +1,16 @@
-﻿
-
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Concesionaria.domain.Entities
 {
-    public  class Usuario
+    public abstract class Usuario
     {
         private const string PatronTelefono = @"^\d{10}$";
-        public int Id { get; set; }
-        public string Nombre { get; private set; } 
-        public string Apellido { get; private set; } 
-        public string Email { get; private  set; } 
-        public string Contrasenia { get;  private set; } 
-        public string Telefono { get; private  set; }
+        public int Id { get; private set; }
+        public string Nombre { get; private set; }
+        public string Apellido { get; private set; }
+        public string Email { get; private set; }
+        public string Contrasenia { get; private set; }
+        public string Telefono { get; private set; }
         protected Usuario()
         {
             Nombre = null!;
@@ -21,7 +19,7 @@ namespace Concesionaria.domain.Entities
             Contrasenia = null!;
             Telefono = null!;
         }
-        public Usuario(string nombre, string apellido, string email, string contrasenia, string telefono)
+        protected Usuario(string nombre, string apellido, string email, string contrasenia, string telefono)
         {
 
             if (string.IsNullOrWhiteSpace(nombre))
@@ -43,8 +41,8 @@ namespace Concesionaria.domain.Entities
             if (string.IsNullOrWhiteSpace(telefono))
             {
                 throw new ArgumentException("El teléfono no puede estar vacío.", nameof(telefono));
-            } 
-            if(!Regex.IsMatch(telefono, PatronTelefono))
+            }
+            if (!Regex.IsMatch(telefono, PatronTelefono))
             {
                 throw new ArgumentException("El teléfono debe tener 10 dígitos.", nameof(telefono));
             }
