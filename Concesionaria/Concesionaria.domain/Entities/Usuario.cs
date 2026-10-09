@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Concesionaria.domain.Entities
 {
-    public  class Usuario
+    public abstract class Usuario
     {
         private const string PatronTelefono = @"^\d{10}$";
         public int Id { get; set; }
