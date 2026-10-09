@@ -13,7 +13,6 @@ builder.Services.AddControllers();
 // OpenAPI
 builder.Services.AddOpenApi();
 
-// Entity Framework Core + SQL Server
 builder.Services.AddDbContext<ConcesionariaDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DevelopmentConnection")
@@ -21,8 +20,15 @@ builder.Services.AddDbContext<ConcesionariaDbContext>(options =>
 );
 
 // Inyección de dependencias
+
+// Vehículos
 builder.Services.AddScoped<IVehiculoService, VehiculoService>();
 builder.Services.AddScoped<IRepositorioVehiculos, RepositorioVehiculos>();
+
+// Reservas
+builder.Services.AddScoped<IReservaService, ReservaService>();
+builder.Services.AddScoped<IRepositorioReservas, RepositorioReservas>();
+builder.Services.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
 
 var app = builder.Build();
 

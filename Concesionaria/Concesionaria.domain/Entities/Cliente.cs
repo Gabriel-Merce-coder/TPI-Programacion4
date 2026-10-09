@@ -1,4 +1,5 @@
-﻿namespace Concesionaria.domain.Entities
+﻿
+namespace Concesionaria.domain.Entities
 {
     public class Cliente : Usuario
     {
