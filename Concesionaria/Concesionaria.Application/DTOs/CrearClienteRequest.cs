@@ -1,11 +1,10 @@
 ﻿namespace Concesionaria.Application.DTOs
 {
-    public record RegistrarAdministradorRequest(
+    public record CrearClienteRequest(
         string Nombre,
         string Apellido,
         string Email,
         string Contrasenia,
-        string Telefono,
-        string Cargo
+        string Telefono
     );
 }
