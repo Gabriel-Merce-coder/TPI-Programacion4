@@ -1,6 +1,7 @@
 using Concesionaria.Application.Interfaces;
 using Concesionaria.Application.Services;
 using Concesionaria.domain.Interfaces;
+using Concesionaria.Infrastructure.ExternalServices;
 using Concesionaria.Infrastructure.Persistence;
 using Concesionaria.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,11 @@ builder.Services.AddScoped<IRepositorioVehiculos, RepositorioVehiculos>();
 builder.Services.AddScoped<IReservaService, ReservaService>();
 builder.Services.AddScoped<IRepositorioReservas, RepositorioReservas>();
 builder.Services.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
+
+// Usuarios
+builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IAdministradorService, AdministradorService>();
+builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 
 var app = builder.Build();
 
