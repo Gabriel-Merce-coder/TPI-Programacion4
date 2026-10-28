@@ -1,5 +1,7 @@
-﻿using Concesionaria.Application.DTOs;
+﻿
+using Concesionaria.Application.DTOs;
 using Concesionaria.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Concesionaria.Presentation.Controllers
@@ -42,6 +44,7 @@ namespace Concesionaria.Presentation.Controllers
 
         // GET: api/Administradores
         [HttpGet]
+        [Authorize(Policy = Policies.AdminsOnly)]
         public ActionResult<IReadOnlyList<AdministradorResponse>> ObtenerTodos()
         {
             var administradores = administradorService.ObtenerTodos();
@@ -56,6 +59,7 @@ namespace Concesionaria.Presentation.Controllers
 
         // GET: api/Administradores/1
         [HttpGet("{id:int}")]
+        [Authorize(Policy = Policies.AdminsOnly)]
         public ActionResult<AdministradorResponse> ObtenerPorId(int id)
         {
             var administrador = administradorService.ObtenerPorId(id);
