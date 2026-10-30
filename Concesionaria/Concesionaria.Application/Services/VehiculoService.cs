@@ -1,4 +1,5 @@
-﻿using Concesionaria.Application.DTOs;
+﻿
+using Concesionaria.Application.DTOs;
 using Concesionaria.Application.Interfaces;
 using Concesionaria.domain.Entities;
 using Concesionaria.domain.Interfaces;
@@ -33,21 +34,23 @@ namespace Concesionaria.Application.Services
             return VehiculoResponse.Desde(vehiculo);
         }
 
-
         public IReadOnlyList<VehiculoResponse> ObtenerTodos() =>
-            repositorioVehiculos.ObtenerTodos().Select(VehiculoResponse.Desde).ToList();
+            repositorioVehiculos.ObtenerTodos()
+                .Select(VehiculoResponse.Desde)
+                .ToList();
 
         public VehiculoResponse? ObtenerPorId(int id)
         {
             var vehiculo = repositorioVehiculos.ObtenerPorId(id);
 
-            return vehiculo == null ? null : VehiculoResponse.Desde(vehiculo);
+            return vehiculo == null
+                ? null
+                : VehiculoResponse.Desde(vehiculo);
         }
 
-
         public VehiculoResponse? Actualizar(
-    int id,
-    ActualizarVehiculoRequest request)
+            int id,
+            ActualizarVehiculoRequest request)
         {
             var vehiculo = repositorioVehiculos.ObtenerPorId(id);
 
@@ -56,15 +59,16 @@ namespace Concesionaria.Application.Services
                 return null;
             }
 
-            vehiculo.ActualizarDatos(
-                request.Marca,
-                request.Modelo,
-                request.Version,
-                request.Anio,
-                request.Color,
-                request.Precio,
-                request.Valuacion,
-                request.Kilometraje
+            if (request.Precio == null &&
+                request.Kilometraje == null)
+            {
+                throw new ArgumentException(
+                    "Debe proporcionar al menos un dato para actualizar.");
+            }
+
+            vehiculo.ActualizarDatosComerciales(
+                request.Precio ?? vehiculo.Precio,
+                request.Kilometraje ?? vehiculo.Kilometraje
             );
 
             repositorioVehiculos.GuardarCambios();

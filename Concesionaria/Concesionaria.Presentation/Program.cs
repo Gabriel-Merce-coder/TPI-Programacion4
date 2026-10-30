@@ -1,3 +1,4 @@
+
 using Concesionaria.Application.Interfaces;
 using Concesionaria.Application.Services;
 using Concesionaria.domain.Interfaces;
@@ -19,6 +20,9 @@ builder.Services.AddControllers();
 // OpenAPI
 builder.Services.AddOpenApi();
 
+builder.Services.AddSwaggerGen();
+
+// Base de datos
 builder.Services.AddDbContext<ConcesionariaDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DevelopmentConnection")
@@ -35,6 +39,10 @@ builder.Services.AddScoped<IRepositorioVehiculos, RepositorioVehiculos>();
 builder.Services.AddScoped<IReservaService, ReservaService>();
 builder.Services.AddScoped<IRepositorioReservas, RepositorioReservas>();
 builder.Services.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
+
+// Ventas
+builder.Services.AddScoped<IVentaService, VentaService>();
+builder.Services.AddScoped<IRepositorioVentas, RepositorioVentas>();
 
 // Usuarios
 builder.Services.AddScoped<IClienteService, ClienteService>();
@@ -92,6 +100,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
