@@ -6,6 +6,7 @@ namespace Concesionaria.domain.Entities
     public class Vehiculo
     {
         private readonly List<Reserva> reservas = new List<Reserva>();
+
         private readonly List<VehiculoEquipamiento> vehiculoEquipamientos
             = new List<VehiculoEquipamiento>();
 
@@ -37,6 +38,7 @@ namespace Concesionaria.domain.Entities
             Version = null!;
             Color = null!;
         }
+
         public Vehiculo(
             string marca,
             string modelo,
@@ -115,7 +117,6 @@ namespace Concesionaria.domain.Entities
             Estado = EstadoVehiculoEnum.Disponible;
         }
 
-
         public void Reservar()
         {
             if (FechaBaja != null)
@@ -132,7 +133,6 @@ namespace Concesionaria.domain.Entities
 
             Estado = EstadoVehiculoEnum.Reservado;
         }
-
 
         public void CancelarReserva()
         {
@@ -151,7 +151,6 @@ namespace Concesionaria.domain.Entities
             Estado = EstadoVehiculoEnum.Disponible;
         }
 
-
         public void Vender()
         {
             if (Estado != EstadoVehiculoEnum.Reservado)
@@ -169,51 +168,20 @@ namespace Concesionaria.domain.Entities
             Estado = EstadoVehiculoEnum.Vendido;
         }
 
-
-
-        public void ActualizarDatos(
-            string marca,
-            string modelo,
-            string version,
-            int anio,
-            string color,
+        public void ActualizarDatosComerciales(
             decimal precio,
-            decimal valuacion,
             int kilometraje)
         {
-            if (string.IsNullOrWhiteSpace(marca))
+            if (Estado == EstadoVehiculoEnum.Vendido)
             {
-                throw new ArgumentException(
-                    "La marca no puede estar vacía.",
-                    nameof(marca));
+                throw new InvalidOperationException(
+                    "No se pueden modificar los datos comerciales de un vehículo vendido.");
             }
 
-            if (string.IsNullOrWhiteSpace(modelo))
+            if (FechaBaja != null)
             {
-                throw new ArgumentException(
-                    "El modelo no puede estar vacío.",
-                    nameof(modelo));
-            }
-
-            if (string.IsNullOrWhiteSpace(version))
-            {
-                throw new ArgumentException(
-                    "La versión no puede estar vacía.",
-                    nameof(version));
-            }
-
-            if (anio <= 0)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(anio),
-                    "El año debe ser válido.");
-            }
-
-            if (string.IsNullOrWhiteSpace(color))
-            {
-                throw new ArgumentException(
-                    "El color no puede estar vacío.",
-                    nameof(color));
+                throw new InvalidOperationException(
+                    "No se pueden modificar los datos comerciales de un vehículo dado de baja.");
             }
 
             if (precio <= 0)
@@ -223,13 +191,6 @@ namespace Concesionaria.domain.Entities
                     "El precio debe ser mayor a cero.");
             }
 
-            if (valuacion <= 0)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(valuacion),
-                    "La valuación debe ser mayor a cero.");
-            }
-
             if (kilometraje < 0)
             {
                 throw new ArgumentOutOfRangeException(
@@ -237,16 +198,9 @@ namespace Concesionaria.domain.Entities
                     "El kilometraje no puede ser negativo.");
             }
 
-            Marca = marca;
-            Modelo = modelo;
-            Version = version;
-            Anio = anio;
-            Color = color;
             Precio = precio;
-            Valuacion = valuacion;
             Kilometraje = kilometraje;
         }
-
 
         public void DarDeBaja()
         {

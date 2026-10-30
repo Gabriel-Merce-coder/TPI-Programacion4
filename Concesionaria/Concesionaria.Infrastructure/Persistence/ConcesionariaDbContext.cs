@@ -1,4 +1,5 @@
-﻿using Concesionaria.domain.Entities;
+﻿
+using Concesionaria.domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Concesionaria.Infrastructure.Persistence
@@ -16,6 +17,7 @@ namespace Concesionaria.Infrastructure.Persistence
         public DbSet<Cliente> Clientes => Set<Cliente>();
         public DbSet<Administrador> Administradores => Set<Administrador>();
         public DbSet<Reserva> Reservas => Set<Reserva>();
+        public DbSet<Venta> Ventas => Set<Venta>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +39,13 @@ namespace Concesionaria.Infrastructure.Persistence
                 .HasForeignKey(r => r.VehiculoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Ignore<Venta>();
+            // Relación uno a uno: Reserva - Venta
+            modelBuilder.Entity<Venta>()
+                .HasOne(v => v.Reserva)
+                .WithOne(r => r.Venta)
+                .HasForeignKey<Venta>(v => v.ReservaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Ignore<VehiculoEquipamiento>();
 
             modelBuilder.Entity<Vehiculo>()
@@ -46,6 +54,10 @@ namespace Concesionaria.Infrastructure.Persistence
 
             modelBuilder.Entity<Vehiculo>()
                 .Property(v => v.Valuacion)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Venta>()
+                .Property(v => v.PrecioFinal)
                 .HasPrecision(18, 2);
 
             base.OnModelCreating(modelBuilder);

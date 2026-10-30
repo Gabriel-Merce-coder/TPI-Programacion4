@@ -138,6 +138,32 @@ namespace Concesionaria.Infrastructure.Persistence.Migrations
                     b.ToTable("Vehiculos");
                 });
 
+            modelBuilder.Entity("Concesionaria.domain.Entities.Venta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("FechaVenta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("PrecioFinal")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ReservaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservaId")
+                        .IsUnique();
+
+                    b.ToTable("Ventas");
+                });
+
             modelBuilder.Entity("Concesionaria.domain.Entities.Administrador", b =>
                 {
                     b.HasBaseType("Concesionaria.domain.Entities.Usuario");
@@ -173,6 +199,22 @@ namespace Concesionaria.Infrastructure.Persistence.Migrations
                     b.Navigation("Cliente");
 
                     b.Navigation("Vehiculo");
+                });
+
+            modelBuilder.Entity("Concesionaria.domain.Entities.Venta", b =>
+                {
+                    b.HasOne("Concesionaria.domain.Entities.Reserva", "Reserva")
+                        .WithOne("Venta")
+                        .HasForeignKey("Concesionaria.domain.Entities.Venta", "ReservaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Reserva");
+                });
+
+            modelBuilder.Entity("Concesionaria.domain.Entities.Reserva", b =>
+                {
+                    b.Navigation("Venta");
                 });
 
             modelBuilder.Entity("Concesionaria.domain.Entities.Vehiculo", b =>
