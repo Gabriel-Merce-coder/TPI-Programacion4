@@ -1,5 +1,6 @@
 ﻿using Concesionaria.Application.DTOs;
 using Concesionaria.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Concesionaria.Presentation.Controllers
@@ -16,6 +17,7 @@ namespace Concesionaria.Presentation.Controllers
         }
 
         // POST: api/Clientes
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult<ClienteResponse> Crear(
             [FromBody] CrearClienteRequest request)
@@ -41,6 +43,7 @@ namespace Concesionaria.Presentation.Controllers
         }
 
         // GET: api/Clientes
+        [Authorize(Policy = Policies.AdminsOnly)]
         [HttpGet]
         public ActionResult<IReadOnlyList<ClienteResponse>> ObtenerTodos()
         {
@@ -55,6 +58,7 @@ namespace Concesionaria.Presentation.Controllers
         }
 
         // GET: api/Clientes/1
+        [Authorize(Policy = Policies.AdminsOnly)]
         [HttpGet("{id:int}")]
         public ActionResult<ClienteResponse> ObtenerPorId(int id)
         {
