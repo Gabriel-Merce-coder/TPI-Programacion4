@@ -18,6 +18,8 @@ namespace Concesionaria.Infrastructure.Persistence
         public DbSet<Administrador> Administradores => Set<Administrador>();
         public DbSet<Reserva> Reservas => Set<Reserva>();
         public DbSet<Venta> Ventas => Set<Venta>();
+        public DbSet<Equipamiento> Equipamientos => Set<Equipamiento>();
+        public DbSet<VehiculoEquipamiento> VehiculosEquipamientos => Set<VehiculoEquipamiento>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,7 +48,21 @@ namespace Concesionaria.Infrastructure.Persistence
                 .HasForeignKey<Venta>(v => v.ReservaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Ignore<VehiculoEquipamiento>();
+            // Relación muchos a muchos: Vehículo - Equipamiento (tabla intermedia explícita)
+            modelBuilder.Entity<VehiculoEquipamiento>()
+                .HasKey(ve => new { ve.VehiculoId, ve.EquipamientoId });
+
+            modelBuilder.Entity<VehiculoEquipamiento>()
+                .HasOne(ve => ve.Vehiculo)
+                .WithMany(v => v.VehiculoEquipamientos)
+                .HasForeignKey(ve => ve.VehiculoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<VehiculoEquipamiento>()
+                .HasOne(ve => ve.Equipamiento)
+                .WithMany(e => e.VehiculoEquipamientos)
+                .HasForeignKey(ve => ve.EquipamientoId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Vehiculo>()
                 .Property(v => v.Precio)

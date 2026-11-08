@@ -24,6 +24,27 @@ namespace Concesionaria.Infrastructure.Persistence.Migrations
 
             modelBuilder.HasSequence("UsuarioSequence");
 
+            modelBuilder.Entity("Concesionaria.domain.Entities.Equipamiento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Equipamientos");
+                });
+
             modelBuilder.Entity("Concesionaria.domain.Entities.Reserva", b =>
                 {
                     b.Property<int>("Id")
@@ -138,6 +159,21 @@ namespace Concesionaria.Infrastructure.Persistence.Migrations
                     b.ToTable("Vehiculos");
                 });
 
+            modelBuilder.Entity("Concesionaria.domain.Entities.VehiculoEquipamiento", b =>
+                {
+                    b.Property<int>("VehiculoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EquipamientoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("VehiculoId", "EquipamientoId");
+
+                    b.HasIndex("EquipamientoId");
+
+                    b.ToTable("VehiculosEquipamientos");
+                });
+
             modelBuilder.Entity("Concesionaria.domain.Entities.Venta", b =>
                 {
                     b.Property<int>("Id")
@@ -201,6 +237,25 @@ namespace Concesionaria.Infrastructure.Persistence.Migrations
                     b.Navigation("Vehiculo");
                 });
 
+            modelBuilder.Entity("Concesionaria.domain.Entities.VehiculoEquipamiento", b =>
+                {
+                    b.HasOne("Concesionaria.domain.Entities.Equipamiento", "Equipamiento")
+                        .WithMany("VehiculoEquipamientos")
+                        .HasForeignKey("EquipamientoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Concesionaria.domain.Entities.Vehiculo", "Vehiculo")
+                        .WithMany("VehiculoEquipamientos")
+                        .HasForeignKey("VehiculoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Equipamiento");
+
+                    b.Navigation("Vehiculo");
+                });
+
             modelBuilder.Entity("Concesionaria.domain.Entities.Venta", b =>
                 {
                     b.HasOne("Concesionaria.domain.Entities.Reserva", "Reserva")
@@ -212,6 +267,11 @@ namespace Concesionaria.Infrastructure.Persistence.Migrations
                     b.Navigation("Reserva");
                 });
 
+            modelBuilder.Entity("Concesionaria.domain.Entities.Equipamiento", b =>
+                {
+                    b.Navigation("VehiculoEquipamientos");
+                });
+
             modelBuilder.Entity("Concesionaria.domain.Entities.Reserva", b =>
                 {
                     b.Navigation("Venta");
@@ -220,6 +280,8 @@ namespace Concesionaria.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Concesionaria.domain.Entities.Vehiculo", b =>
                 {
                     b.Navigation("Reservas");
+
+                    b.Navigation("VehiculoEquipamientos");
                 });
 
             modelBuilder.Entity("Concesionaria.domain.Entities.Cliente", b =>

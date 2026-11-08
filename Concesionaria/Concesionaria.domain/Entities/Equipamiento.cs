@@ -5,7 +5,7 @@
         private readonly List<VehiculoEquipamiento> vehiculoEquipamientos
             = new List<VehiculoEquipamiento>();
 
-        public int Id { get; }
+        public int Id { get; private set; }
 
         public string Nombre { get; private set; }
 
@@ -13,6 +13,13 @@
 
         public IReadOnlyList<VehiculoEquipamiento> VehiculoEquipamientos
             => vehiculoEquipamientos.AsReadOnly();
+
+
+        private Equipamiento()
+        {
+            Nombre = null!;
+            Descripcion = null!;
+        }
 
 
         public Equipamiento(
