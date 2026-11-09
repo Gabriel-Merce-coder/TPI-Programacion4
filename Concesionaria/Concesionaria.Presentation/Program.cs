@@ -94,6 +94,10 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole(nameof(Administrador), nameof(Cliente)));
 });
 
+// Equipamientos
+builder.Services.AddScoped<IRepositorioEquipamientos, RepositorioEquipamientos>();
+builder.Services.AddScoped<IEquipamientoService, EquipamientoService>();
+
 var app = builder.Build();
 
 // OpenAPI solamente en desarrollo
