@@ -98,6 +98,10 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<IRepositorioEquipamientos, RepositorioEquipamientos>();
 builder.Services.AddScoped<IEquipamientoService, EquipamientoService>();
 
+// Vehículo - Equipamiento
+builder.Services.AddScoped<IRepositorioVehiculoEquipamientos, RepositorioVehiculoEquipamientos>();
+builder.Services.AddScoped<IVehiculoEquipamientoService, VehiculoEquipamientoService>();
+
 var app = builder.Build();
 
 // OpenAPI solamente en desarrollo
