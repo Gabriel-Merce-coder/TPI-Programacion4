@@ -89,6 +89,10 @@ namespace Concesionaria.Presentation.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(ex.Message);
+            }
         }
 
         // DELETE: api/Vehiculos/1
